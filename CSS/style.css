@@ -1,0 +1,57 @@
+.touches {
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px;
+  grid-template-rows: 50px 50px 50px 50px 50px;
+  column-gap: 5px;
+  row-gap: 5px;
+}
+.affichageResultat {
+  color: white;
+  font-size: 20px;
+  width: 207px;
+  height: 40px;
+  margin-bottom: 10px;
+  margin-top: 0px;
+  text-align: right;
+  box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000,
+    5px 5px 15px 5px rgba(255, 255, 255, 0);
+  box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000,
+    5px 5px 15px 5px rgba(255, 255, 255, 0);
+}
+.calculatrice {
+  box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000,
+    5px 5px 15px 5px rgba(255, 255, 255, 0);
+  box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000,
+    5px 5px 15px 5px rgba(255, 255, 255, 0);
+  width: 215px;
+  padding: 10px;
+  background-color: black;
+  border-radius: 15px;
+}
+button {
+  font-size: 17px;
+
+  box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000,
+    5px 5px 15px 5px rgba(255, 255, 255, 0);
+  box-shadow: 5px 5px 5px 0px #000000, inset 4px 4px 15px 0px #000000,
+    5px 5px 15px 5px rgba(255, 255, 255, 0);
+  border-radius: 25px;
+  outline-style: none;
+  border-style: none;
+}
+button:active {
+  box-shadow: 0px 10px 13px -7px #000000,
+    5px 5px 15px 5px rgba(255, 255, 255, 0);
+  box-shadow: 0px 10px 13px -7px #000000,
+    5px 5px 15px 5px rgba(255, 255, 255, 0);
+}
+.operateur {
+  color: white;
+  background-color: gray;
+}
+.egal {
+  background-color: green;
+}
+.effacer {
+  background-color: orangered;
+}

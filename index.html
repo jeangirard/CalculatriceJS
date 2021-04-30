@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculatrice</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="CSS/style.css" />
+  </head>
+
+  <body>
+    <div class="calculatrice">
+      <input type="text" class="affichageResultat" value="" disabled="" />
+      <div class="touches">
+        <button type="button" class="effacer operateur" value="effacer">
+          AC
+        </button>
+        <button type="button" class="operateur" value="*-1">+/-</button>
+        <button type="button" class="operateur" value="%">mod</button>
+        <button type="button" class="operateur" value="/">&divide</button>
+        <button type="button" value="7">7</button>
+        <button type="button" value="8">8</button>
+        <button type="button" value="9">9</button>
+        <button type="button" class="operateur" value="*">&times</button>
+        <button type="button" value="4">4</button>
+        <button type="button" value="5">5</button>
+        <button type="button" value="6">6</button>
+        <button type="button" class="operateur" value="-">-</button>
+        <button type="button" value="1">1</button>
+        <button type="button" value="2">2</button>
+        <button type="button" value="3">3</button>
+        <button type="button" class="operateur" value="+">+</button>
+        <button type="button" value="0">0</button>
+        <button type="button" value=".">.</button>
+        <button type="button" class="egal operateur" value="=">=</button>
+      </div>
+    </div>
+
+    <script>
+      //  <!-- On défini un tableau associatif {clé:valeur} capable de mémoriser des informations concernant l'état de la calculatrice -->
+      var calculatrice = {
+        affichage: "0",
+        operateur: "",
+        operande1: "",
+        operande2: "",
+        contientPoint: false
+        // <!-- Ajouter vos paires ici ! -->
+      };
+
+      function majAffichageResultat() {
+        var affichageActuel = document.querySelector(".affichageResultat");
+        affichageActuel.value = calculatrice.affichage;
+        // <!-- On met à jour à l'écran ce qui est affiché dans le champ de résultat de la calculatrice -->
+      }
+
+      //  <!-- On appelle la mise-à-jour de la zone d'affichage du résultat au chargement de la page (hors de toute fonction) -->
+      majAffichageResultat();
+
+      //  <!-- Ici on emploie une technique élégante pour gérer les clics, peut importe quel bouton est appuyé -->
+      var touches = document.querySelector(".touches");
+      touches.addEventListener("click", (event) => {
+        // <!-- Sur la ligne suivante, on définit la variable target et on va extraire l'attribut du même nom de l'objet event -->
+        var { target } = event;
+        var { value } = target;
+        // <!-- On traite le clic uniquement pour les boutons que nous avons définis -->
+        if (!target.matches("button")) {
+          return;
+        }
+        if (calculatrice.affichage == "Erreur") {
+          calculatrice.affichage = "";
+          calculatrice.operande1 = "";
+        }
+        if (value >= 0 && value < 10 && calculatrice.operande2.length < 17) {
+          if (
+            calculatrice.operateur == "" &&
+            calculatrice.operande1.length < 17
+          ) {
+            calculatrice.operande1 += value;
+            calculatrice.affichage = calculatrice.operande1;
+          } else if (calculatrice.operateur != "") {
+            calculatrice.operande2 += value;
+            calculatrice.affichage = calculatrice.operande2;
+          } else if (calculatrice.affichage == "0") {
+            calculatrice.affichage = "";
+          }
+        } else if (value == "." && calculatrice.contientPoint == false) {
+          if (calculatrice.operateur == "") {
+            calculatrice.operande1 += value;
+            calculatrice.affichage = calculatrice.operande1;
+            calculatrice.contientPoint = true;
+          } else {
+            calculatrice.operande2 += value;
+            calculatrice.affichage = calculatrice.operande2;
+            calculatrice.contientPoint = true;
+          }
+        } else if (value == "effacer") {
+          calculatrice.affichage = 0;
+          calculatrice.operande1 = "";
+          calculatrice.operande2 = "";
+          calculatrice.operateur = "";
+        } else if (value == "*-1") {
+          if (calculatrice.operande2 == "") {
+            calculatrice.operande1 = calculatrice.operande1 * -1;
+            calculatrice.affichage = calculatrice.operande1;
+          } else {
+            calculatrice.operande2 = calculatrice.operande2 * -1;
+            calculatrice.affichage = calculatrice.operande2;
+          }
+        } else if (
+          target.matches(".operateur") &&
+          calculatrice.operateur == "" &&
+          value != "="
+        ) {
+          calculatrice.operateur = value;
+          calculatrice.contientPoint = false;
+        } else if (calculatrice.operande2 != "" && value == "=") {
+          calculatrice.affichage = calculer(
+            calculatrice.operande1,
+            calculatrice.operateur,
+            calculatrice.operande2
+          );
+          calculatrice.contientPoint = false;
+          calculatrice.operande1 = calculatrice.affichage;
+          calculatrice.operande2 = "";
+          calculatrice.operateur = "";
+        }
+
+        majAffichageResultat();
+
+        // <!-- Ajouter le traitement ici -->
+      });
+      function calculer(operande1, operateur, operande2) {
+        if (operateur == "-") {
+          return operande1 - operande2;
+        } else if (operateur == "+") {
+          return parseFloat(operande1) + parseFloat(operande2);
+        } else if (operateur == "/") {
+          if (operande2 == 0) return "Erreur";
+          return operande1 / operande2;
+        } else if (operateur == "*") {
+          return operande1 * operande2;
+        } else if (operateur == "%") {
+          return operande1 % operande2;
+        }
+      }
+    </script>
+  </body>
+</html>
